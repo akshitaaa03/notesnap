@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HandNote OCR — Handwriting to Text</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <div class="grain"></div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-mark">✦</span>
+        <span class="logo-text">NoteSnap<em>OCR</em></span>
+      </div>
+      <nav class="header-nav">
+        <span class="nav-tag">Powered by EasyOCR</span>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <section class="hero">
+      <h1 class="hero-title">
+        Turn handwriting<br/>
+        <em>into structured text</em>
+      </h1>
+      <p class="hero-sub">Upload a photo of your notes,we'll extract, structure, and format them instantly.</p>
+    </section>
+
+    <div class="workspace">
+      <!-- Upload Panel -->
+      <div class="panel upload-panel" id="uploadPanel">
+        <div class="drop-zone" id="dropZone">
+          <div class="drop-icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+              <path d="M24 8V32M24 8L16 16M24 8L32 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M8 36H40" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <p class="drop-label">Drop your image here</p>
+          <p class="drop-hint">or</p>
+          <label class="btn btn-outline" for="fileInput">Browse files</label>
+          <input type="file" id="fileInput" accept="image/*" hidden />
+          <p class="drop-formats">PNG · JPG · WEBP · BMP · TIFF</p>
+        </div>
+
+        <div class="preview-area hidden" id="previewArea">
+          <img id="previewImg" class="preview-image" alt="Preview" />
+          <div class="preview-actions">
+            <button class="btn btn-primary" id="analyzeBtn">Analyze Handwriting</button>
+            <button class="btn btn-ghost" id="clearBtn">Clear</button>
+          </div>
+          <div class="preview-meta" id="previewMeta"></div>
+        </div>
+      </div>
+
+      <!-- Results Panel -->
+      <div class="panel results-panel" id="resultsPanel">
+        <div class="results-placeholder" id="resultsPlaceholder">
+          <div class="placeholder-icon">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+              <rect x="6" y="8" width="28" height="4" rx="2" fill="currentColor" opacity="0.2"/>
+              <rect x="6" y="16" width="22" height="4" rx="2" fill="currentColor" opacity="0.15"/>
+              <rect x="6" y="24" width="26" height="4" rx="2" fill="currentColor" opacity="0.1"/>
+              <rect x="6" y="32" width="16" height="4" rx="2" fill="currentColor" opacity="0.07"/>
+            </svg>
+          </div>
+          <p>Your extracted text will appear here</p>
+        </div>
+
+        <div class="results-content hidden" id="resultsContent">
+          <div class="results-toolbar">
+            <div class="stats-row" id="statsRow"></div>
+            <div class="toolbar-actions">
+              <button class="icon-btn" id="copyFormatted" title="Copy formatted text">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M3 11H2a1 1 0 01-1-1V2a1 1 0 011-1h8a1 1 0 011 1v1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                Copy
+              </button>
+              <button class="icon-btn" id="downloadJson" title="Download JSON">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v8M8 10l-3-3M8 10l3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 12h12" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                JSON
+              </button>
+            </div>
+          </div>
+
+          <div class="tabs">
+            <button class="tab active" data-tab="formatted">Formatted</button>
+            <button class="tab" data-tab="plain">Plain Text</button>
+            <button class="tab" data-tab="raw">Word Breakdown</button>
+          </div>
+
+          <div class="tab-content" id="tab-formatted">
+            <div class="formatted-output" id="formattedOutput"></div>
+          </div>
+
+          <div class="tab-content hidden" id="tab-plain">
+            <pre class="plain-output" id="plainOutput"></pre>
+          </div>
+
+          <div class="tab-content hidden" id="tab-raw">
+            <div class="raw-output" id="rawOutput"></div>
+          </div>
+        </div>
+
+        <div class="loading-overlay hidden" id="loadingOverlay">
+          <div class="loader">
+            <div class="loader-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <p class="loader-text" id="loaderText">Reading handwriting...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>NoteSnapOCR &mdash; EasyOCR + Flask &mdash; All processing is local, nothing stored.</p>
+  </footer>
+
+  <div class="toast hidden" id="toast"></div>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

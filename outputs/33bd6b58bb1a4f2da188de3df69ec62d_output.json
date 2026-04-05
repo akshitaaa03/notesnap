@@ -1,0 +1,19 @@
+{
+  "raw_lines": [
+    {
+      "text": "HELLO",
+      "confidence": 0.999
+    }
+  ],
+  "formatted_text": "## HELLO",
+  "plain_text": "HELLO",
+  "word_count": 2,
+  "avg_confidence": 0.999,
+  "sections": [
+    {
+      "heading": "HELLO",
+      "content": []
+    }
+  ],
+  "line_count": 1
+}

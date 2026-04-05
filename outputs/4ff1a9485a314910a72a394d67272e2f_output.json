@@ -1,0 +1,21 @@
+{
+  "raw_lines": [
+    {
+      "text": "Gursive",
+      "confidence": 0.749
+    }
+  ],
+  "formatted_text": "Gursive",
+  "plain_text": "Gursive",
+  "word_count": 1,
+  "avg_confidence": 0.749,
+  "sections": [
+    {
+      "heading": null,
+      "content": [
+        "Gursive"
+      ]
+    }
+  ],
+  "line_count": 1
+}

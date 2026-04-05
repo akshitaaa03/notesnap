@@ -1,7 +1,9 @@
 flask
-easyocr
 pillow
+easyocr
 textblob
 pyspellchecker
+opencv-python-headless
 numpy
 torch
+python-bidi==0.4.2
